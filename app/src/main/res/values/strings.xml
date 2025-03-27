@@ -1,0 +1,85 @@
+<resources>
+    <string name="app_name">Weekly_Recipe_Planner</string>
+    <!-- Authentication -->
+    <string name="welcome_back">Welcome back!</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="or_sign_in_with">Or sign in with</string>
+
+    <!-- Recipe -->
+    <string name="add_recipe">Add Recipe</string>
+    <string name="recipe_name">Recipe Name</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="instructions">Instructions</string>
+    <string name="cuisine">Cuisine</string>
+    <string name="meal_type">Meal Type</string>
+    <string name="dietary_restrictions">Dietary Restrictions</string>
+    <string name="prep_time">Prep Time (min)</string>
+    <string name="cook_time">Cook Time (min)</string>
+    <string name="servings">Servings</string>
+    <string name="add_image">Add Image</string>
+    <string name="save">Save</string>
+
+    <!-- Grocery List -->
+    <string name="share_list">Share List</string>
+    <string name="clear_purchased">Clear Purchased</string>
+    <string name="assign_store">Assign Store</string>
+
+    <!-- Arrays -->
+    <string-array name="cuisine_options">
+        <item>Any</item>
+        <item>American</item>
+        <item>Italian</item>
+        <item>Mexican</item>
+        <item>Indian</item>
+        <item>Chinese</item>
+        <item>Japanese</item>
+        <item>Mediterranean</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="meal_type_options">
+        <item>Breakfast</item>
+        <item>Lunch</item>
+        <item>Dinner</item>
+        <item>Snack</item>
+        <item>Dessert</item>
+    </string-array>
+
+    <string-array name="dietary_options">
+        <item>None</item>
+        <item>Vegetarian</item>
+        <item>Vegan</item>
+        <item>Gluten-Free</item>
+        <item>Dairy-Free</item>
+        <item>Nut-Free</item>
+        <item>Keto</item>
+        <item>Paleo</item>
+    </string-array>
+
+    <string-array name="grocery_categories">
+        <item>Produce</item>
+        <item>Dairy</item>
+        <item>Meat</item>
+        <item>Bakery</item>
+        <item>Frozen</item>
+        <item>Canned Goods</item>
+        <item>Dry Goods</item>
+        <item>Spices</item>
+        <item>Other</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--    <string name="share_list">Share List</string>-->
+    <!--    <string name="clear_purchased">Clear Purchased</string>-->
+    <string name="organize_by_category">Organize by Category</string>
+    <string name="organize_by_store">Organize by Store</string>
+    <string name="generate_from_plan">Generate from Meal Plan</string>
+    <string name="add_custom_item">Add Custom Item</string>
+    <string name="search">Search</string>
+    <string name="settings">Settings</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="help">Help</string>
+</resources>

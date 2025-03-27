@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Add Recipe -->
+    <item
+        android:id="@+id/action_add_recipe"
+        android:icon="@drawable/baseline_add_24"
+        android:title="@string/add_recipe"
+        app:showAsAction="ifRoom" />
+
+    <!-- Search -->
+    <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_search"
+        android:title="@string/search"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="ifRoom|collapseActionView" />
+
+    <!-- Settings -->
+    <item
+        android:id="@+id/action_settings"
+        android:title="@string/settings"
+        app:showAsAction="never" />
+
+    <!-- Sign Out -->
+    <item
+        android:id="@+id/action_sign_out"
+        android:title="@string/sign_out"
+        app:showAsAction="never" />
+
+    <!-- Help -->
+    <item
+        android:id="@+id/action_help "
+        android:title="@string/help"
+        app:showAsAction="never" />
+</menu>
