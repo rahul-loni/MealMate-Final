@@ -18,73 +18,73 @@ public class Recipe {
     public int getId() {
         return id;
     }
-    public void setId(int id) {
+    public static void setId(int id) {
         this.id = id;
     }
     public String getName() {
         return name;
     }
-    public void setName(String name) {
+    public static void setName(String name) {
         this.name = name;
     }
     public String getImagePath() {
         return imagePath;
     }
-    public void setImagePath(String imagePath) {
+    public static void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
     public String getCuisine() {
         return cuisine;
     }
-    public void setCuisine(String cuisine) {
+    public static void setCuisine(String cuisine) {
         this.cuisine = cuisine;
     }
     public String getMealType() {
         return mealType;
     }
-    public void setMealType(String mealType) {
+    public static void setMealType(String mealType) {
         this.mealType = mealType;
     }
     public String getDietary() {
         return dietary;
     }
-    public void setDietary(String dietary) {
+    public static void setDietary(String dietary) {
         this.dietary = dietary;
     }
     public int getPrepTime() {
         return prepTime;
     }
-    public void setPrepTime(int prepTime) {
+    public static void setPrepTime(int prepTime) {
         this.prepTime = prepTime;
     }
     public int getCookTime() {
         return cookTime;
     }
-    public void setCookTime(int cookTime) {
+    public static void setCookTime(int cookTime) {
         this.cookTime = cookTime;
     }
     public int getServings() {
         return servings;
     }
-    public void setServings(int servings) {
+    public static void setServings(int servings) {
         this.servings = servings;
     }
     public String getIngredients() {
         return ingredients;
     }
-    public void setIngredients(String ingredients) {
+    public static void setIngredients(String ingredients) {
         this.ingredients = ingredients;
     }
     public String getInstructions() {
         return instructions;
     }
-    public void setInstructions(String instructions) {
+    public static void setInstructions(String instructions) {
         this.instructions = instructions;
     }
     public boolean isFavorite() {
         return isFavorite;
     }
-    public void setFavorite(boolean favorite) {
+    public static void setFavorite(boolean favorite) {
         isFavorite = favorite;
     }
 }

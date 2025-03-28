@@ -11,6 +11,9 @@ public class GroceryItem {
     private String storeName;
     private double price;
 
+    public GroceryItem(int id, String name, double price, String description, String image, String location) {
+    }
+
     // Getters and setters for all fields
     public int getId() {
         return id;

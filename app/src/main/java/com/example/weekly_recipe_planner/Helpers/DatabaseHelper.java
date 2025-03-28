@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.example.weekly_recipe_planner.Model.GroceryItem;
 import com.example.weekly_recipe_planner.Model.MealPlan;
@@ -12,6 +13,7 @@ import com.example.weekly_recipe_planner.Model.Recipe;
 import com.example.weekly_recipe_planner.Model.Store;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -162,31 +164,48 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, new String[]{userId});
 
-        if (cursor.moveToFirst()) {
+        if (cursor != null && cursor.moveToFirst()) {
             do {
-                Recipe recipe = new Recipe();
-                recipe.setId(cursor.getInt(cursor.getColumnIndex(COLUMN_ID)));
-                recipe.setName(cursor.getString(cursor.getColumnIndex(COLUMN_RECIPE_NAME)));
-                recipe.setImagePath(cursor.getString(cursor.getColumnIndex(COLUMN_IMAGE_PATH)));
-                recipe.setCuisine(cursor.getString(cursor.getColumnIndex(COLUMN_CUISINE)));
-                recipe.setMealType(cursor.getString(cursor.getColumnIndex(COLUMN_MEAL_TYPE)));
-                recipe.setDietary(cursor.getString(cursor.getColumnIndex(COLUMN_DIETARY)));
-                recipe.setPrepTime(cursor.getInt(cursor.getColumnIndex(COLUMN_PREP_TIME)));
-                recipe.setCookTime(cursor.getInt(cursor.getColumnIndex(COLUMN_COOK_TIME)));
-                recipe.setServings(cursor.getInt(cursor.getColumnIndex(COLUMN_SERVINGS)));
-                recipe.setIngredients(cursor.getString(cursor.getColumnIndex(COLUMN_INGREDIENTS)));
-                recipe.setInstructions(cursor.getString(cursor.getColumnIndex(COLUMN_INSTRUCTIONS)));
-                recipe.setFavorite(cursor.getInt(cursor.getColumnIndex(COLUMN_IS_FAVORITE)) == 1);
+                try {
+                    int idIndex = cursor.getColumnIndex(COLUMN_ID);
+                    int nameIndex = cursor.getColumnIndex(COLUMN_RECIPE_NAME);
+                    int imagePathIndex = cursor.getColumnIndex(COLUMN_IMAGE_PATH);
+                    int cuisineIndex = cursor.getColumnIndex(COLUMN_CUISINE);
+                    int mealTypeIndex = cursor.getColumnIndex(COLUMN_MEAL_TYPE);
+                    int dietaryIndex = cursor.getColumnIndex(COLUMN_DIETARY);
+                    int prepTimeIndex = cursor.getColumnIndex(COLUMN_PREP_TIME);
+                    int cookTimeIndex = cursor.getColumnIndex(COLUMN_COOK_TIME);
+                    int servingsIndex = cursor.getColumnIndex(COLUMN_SERVINGS);
+                    int ingredientsIndex = cursor.getColumnIndex(COLUMN_INGREDIENTS);
+                    int instructionsIndex = cursor.getColumnIndex(COLUMN_INSTRUCTIONS);
+                    int favoriteIndex = cursor.getColumnIndex(COLUMN_IS_FAVORITE);
 
-                recipes.add(recipe);
+                    // Ensure columns exist
+                    if (idIndex != -1) Recipe.setId(cursor.getInt(idIndex));
+                    if (nameIndex != -1) Recipe.setName(cursor.getString(nameIndex));
+                    if (imagePathIndex != -1) Recipe.setImagePath(cursor.getString(imagePathIndex));
+                    if (cuisineIndex != -1) Recipe.setCuisine(cursor.getString(cuisineIndex));
+                    if (mealTypeIndex != -1) Recipe.setMealType(cursor.getString(mealTypeIndex));
+                    if (dietaryIndex != -1) Recipe.setDietary(cursor.getString(dietaryIndex));
+                    if (prepTimeIndex != -1) Recipe.setPrepTime(cursor.getInt(prepTimeIndex));
+                    if (cookTimeIndex != -1) Recipe.setCookTime(cursor.getInt(cookTimeIndex));
+                    if (servingsIndex != -1) Recipe.setServings(cursor.getInt(servingsIndex));
+                    if (ingredientsIndex != -1)
+                        Recipe.setIngredients(cursor.getString(ingredientsIndex));
+                    if (instructionsIndex != -1)
+                        Recipe.setInstructions(cursor.getString(instructionsIndex));
+                    if (favoriteIndex != -1) Recipe.setFavorite(cursor.getInt(favoriteIndex) == 1);
+                } catch (Exception e) {
+                    Log.e("DB_ERROR", "Error reading cursor data: " + e.getMessage());
+                }
             } while (cursor.moveToNext());
+        } else {
+            Log.e("DB_ERROR", "Cursor is empty or null");
         }
-        cursor.close();
-        db.close();
-        return recipes;
-    }
 
-    // Meal Plan operations
+
+    }
+        // Meal Plan operations
     public long addMealPlan(MealPlan mealPlan, String userId) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -211,25 +230,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, new String[]{userId, startDate, endDate});
 
-        if (cursor.moveToFirst()) {
+        if (cursor != null && cursor.moveToFirst()) {
             do {
-                MealPlan mealPlan = new MealPlan();
-                mealPlan.setId(cursor.getInt(cursor.getColumnIndex(COLUMN_ID)));
-                mealPlan.setRecipeId(cursor.getInt(cursor.getColumnIndex(COLUMN_RECIPE_ID)));
-                mealPlan.setDay(cursor.getString(cursor.getColumnIndex(COLUMN_DAY)));
-                mealPlan.setDate(cursor.getString(cursor.getColumnIndex(COLUMN_DATE)));
-                mealPlan.setRecipeName(cursor.getString(cursor.getColumnIndex(COLUMN_RECIPE_NAME)));
-                mealPlan.setRecipeImage(cursor.getString(cursor.getColumnIndex(COLUMN_IMAGE_PATH)));
+                try {
+                    int idIndex = cursor.getColumnIndex(COLUMN_ID);
+                    int recipeIdIndex = cursor.getColumnIndex(COLUMN_RECIPE_ID);
+                    int dayIndex = cursor.getColumnIndex(COLUMN_DAY);
+                    int dateIndex = cursor.getColumnIndex(COLUMN_DATE);
+                    int recipeNameIndex = cursor.getColumnIndex(COLUMN_RECIPE_NAME);
+                    int imagePathIndex = cursor.getColumnIndex(COLUMN_IMAGE_PATH);
 
-                mealPlans.add(mealPlan);
+                    // Ensure indexes are valid before accessing values
+                    MealPlan mealPlan = new MealPlan();
+                    if (idIndex != -1) mealPlan.setId(cursor.getInt(idIndex));
+                    if (recipeIdIndex != -1) mealPlan.setRecipeId(cursor.getInt(recipeIdIndex));
+                    if (dayIndex != -1) mealPlan.setDay(cursor.getString(dayIndex));
+                    if (dateIndex != -1) mealPlan.setDate(cursor.getString(dateIndex));
+                    if (recipeNameIndex != -1)
+                        mealPlan.setRecipeName(cursor.getString(recipeNameIndex));
+                    if (imagePathIndex != -1)
+                        mealPlan.setRecipeImage(cursor.getString(imagePathIndex));
+
+                } catch (Exception e) {
+                    Log.e("DB_ERROR", "Error reading cursor data: " + e.getMessage());
+                }
             } while (cursor.moveToNext());
+        } else {
+            Log.e("DB_ERROR", "Cursor is empty or null");
         }
-        cursor.close();
-        db.close();
-        return mealPlans;
-    }
 
-    // Grocery List operations
+    }
+        // Grocery List operations
     public long addGroceryItem(GroceryItem item, String userId) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -256,26 +287,42 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, new String[]{userId});
-
-        if (cursor.moveToFirst()) {
+        if (cursor != null && cursor.moveToFirst()) {
             do {
-                GroceryItem item = new GroceryItem();
-                item.setId(cursor.getInt(cursor.getColumnIndex(COLUMN_ID)));
-                item.setName(cursor.getString(cursor.getColumnIndex(COLUMN_ITEM_NAME)));
-                item.setCategory(cursor.getString(cursor.getColumnIndex(COLUMN_CATEGORY)));
-                item.setQuantity(cursor.getDouble(cursor.getColumnIndex(COLUMN_QUANTITY)));
-                item.setUnit(cursor.getString(cursor.getColumnIndex(COLUMN_UNIT)));
-                item.setPurchased(cursor.getInt(cursor.getColumnIndex(COLUMN_IS_PURCHASED)) == 1);
-                item.setStoreId(cursor.getInt(cursor.getColumnIndex(COLUMN_STORE_ID)));
-                item.setStoreName(cursor.getString(cursor.getColumnIndex(COLUMN_STORE_NAME)));
-                item.setPrice(cursor.getDouble(cursor.getColumnIndex(COLUMN_PRICE)));
+                try {
+                    // Debugging: Print column names
+                    Log.d("DB_COLUMNS", "Columns: " + Arrays.toString(cursor.getColumnNames()));
 
-                items.add(item);
+                    // Get column indexes safely
+                    int idIndex = cursor.getColumnIndex(COLUMN_ID);
+                    int nameIndex = cursor.getColumnIndex(COLUMN_ITEM_NAME);
+                    int categoryIndex = cursor.getColumnIndex(COLUMN_CATEGORY);
+                    int quantityIndex = cursor.getColumnIndex(COLUMN_QUANTITY);
+                    int unitIndex = cursor.getColumnIndex(COLUMN_UNIT);
+                    int purchasedIndex = cursor.getColumnIndex(COLUMN_IS_PURCHASED);
+                    int storeIdIndex = cursor.getColumnIndex(COLUMN_STORE_ID);
+                    int storeNameIndex = cursor.getColumnIndex(COLUMN_STORE_NAME);
+                    int priceIndex = cursor.getColumnIndex(COLUMN_PRICE);
+
+                    // Ensure indexes are valid before accessing them
+                    GroceryItem item = new GroceryItem();
+                    if (idIndex != -1) item.setId(cursor.getInt(idIndex));
+                    if (nameIndex != -1) item.setName(cursor.getString(nameIndex));
+                    if (categoryIndex != -1) item.setCategory(cursor.getString(categoryIndex));
+                    if (quantityIndex != -1) item.setQuantity(cursor.getDouble(quantityIndex));
+                    if (unitIndex != -1) item.setUnit(cursor.getString(unitIndex));
+                    if (purchasedIndex != -1) item.setPurchased(cursor.getInt(purchasedIndex) == 1);
+                    if (storeIdIndex != -1) item.setStoreId(cursor.getInt(storeIdIndex));
+                    if (storeNameIndex != -1) item.setStoreName(cursor.getString(storeNameIndex));
+                    if (priceIndex != -1) item.setPrice(cursor.getDouble(priceIndex));
+
+                } catch (Exception e) {
+                    Log.e("DB_ERROR", "Error reading cursor data: " + e.getMessage());
+                }
             } while (cursor.moveToNext());
+        } else {
+            Log.e("DB_ERROR", "Cursor is empty or null");
         }
-        cursor.close();
-        db.close();
-        return items;
     }
 
     // Store operations
@@ -299,21 +346,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, new String[]{userId});
 
-        if (cursor.moveToFirst()) {
+        if (cursor != null && cursor.moveToFirst()) {
             do {
-                Store store = new Store();
-                store.setId(cursor.getInt(cursor.getColumnIndex(COLUMN_ID)));
-                store.setName(cursor.getString(cursor.getColumnIndex(COLUMN_STORE_NAME)));
-                store.setAddress(cursor.getString(cursor.getColumnIndex(COLUMN_ADDRESS)));
-                store.setLatitude(cursor.getDouble(cursor.getColumnIndex(COLUMN_LATITUDE)));
-                store.setLongitude(cursor.getDouble(cursor.getColumnIndex(COLUMN_LONGITUDE)));
+                try {
+                    Log.d("DB_COLUMNS", "Columns: " + Arrays.toString(cursor.getColumnNames()));
 
-                stores.add(store);
+                    int idIndex = cursor.getColumnIndex(COLUMN_ID);
+                    int nameIndex = cursor.getColumnIndex(COLUMN_STORE_NAME);
+                    int addressIndex = cursor.getColumnIndex(COLUMN_ADDRESS);
+                    int latitudeIndex = cursor.getColumnIndex(COLUMN_LATITUDE);
+                    int longitudeIndex = cursor.getColumnIndex(COLUMN_LONGITUDE);
+
+                    Store store = new Store();
+                    if (idIndex != -1) store.setId(cursor.getInt(idIndex));
+                    if (nameIndex != -1) store.setName(cursor.getString(nameIndex));
+                    if (addressIndex != -1) store.setAddress(cursor.getString(addressIndex));
+                    if (latitudeIndex != -1) store.setLatitude(cursor.getDouble(latitudeIndex));
+                    if (longitudeIndex != -1) store.setLongitude(cursor.getDouble(longitudeIndex));
+
+                } catch (Exception e) {
+                    Log.e("DB_ERROR", "Error reading cursor: " + e.getMessage());
+                }
             } while (cursor.moveToNext());
+        } else {
+            Log.e("DB_ERROR", "Cursor is empty or null");
         }
-        cursor.close();
-        db.close();
-        return stores;
+
+
     }
     public int assignStoreToGroceryItem(int itemId, int storeId, String userId) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -353,4 +412,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_IS_PURCHASED + " = 1 AND " + COLUMN_USER_ID + " = ?",
                 new String[]{userId});
     }
+    public List<GroceryItem> generateGroceryListFromMealPlan(int userId, String startDate, String endDate) {
+        List<GroceryItem> groceryList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT DISTINCT g.id, g.name, g.price, g.description, g.image, g.location " +
+                "FROM meal_plan mp " +
+                "JOIN recipe r ON mp.recipe_id = r.id " +
+                "JOIN recipe_grocery rg ON r.id = rg.recipe_id " +
+                "JOIN grocery g ON rg.grocery_id = g.id " +
+                "WHERE mp.user_id = ? AND mp.date BETWEEN ? AND ?";
+
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(userId), startDate, endDate});
+
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+                String name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
+                double price = cursor.getDouble(cursor.getColumnIndexOrThrow("price"));
+                String description = cursor.getString(cursor.getColumnIndexOrThrow("description"));
+                String image = cursor.getString(cursor.getColumnIndexOrThrow("image"));
+                String location = cursor.getString(cursor.getColumnIndexOrThrow("location"));
+
+                groceryList.add(new GroceryItem(id, name, price, description, image, location));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return groceryList;
+    }
+
 }

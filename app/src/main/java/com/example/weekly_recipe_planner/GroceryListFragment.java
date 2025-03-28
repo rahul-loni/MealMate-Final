@@ -142,7 +142,7 @@ public class GroceryListFragment extends Fragment {
         String startDate = getStartOfWeekDate();
         String endDate = getEndOfWeekDate();
 
-        dbHelper.generateGroceryListFromMealPlan(userId, startDate, endDate);
+        dbHelper.generateGroceryListFromMealPlan(Integer.parseInt(userId), startDate, endDate);
         loadGroceryList();
         Toast.makeText(getActivity(), "Grocery list generated from meal plan", Toast.LENGTH_SHORT).show();
     }
